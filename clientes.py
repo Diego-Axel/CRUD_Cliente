@@ -71,6 +71,93 @@ def cadastrar_cliente():
             print("Conexão com PostgrSQL fechada")
 
 
+def exibit_cliente():
+    try:
+        connection = psycopg2.connect(
+            user="postgres",
+            password="palmeiras123",
+            host="localhost",
+            port="5432",
+            database="clientes"
+        )
+        cursor = connection.cursor()
+        
+        os.system('clear || cls') # se for Linux use 'clear' e se for Windowns use 'cls'
+        print("#######################################")
+        print("#####   EXIBIR DADOS DO CLIENTE   #####")
+        print("#######################################")
+        print("#####   0 - RETORNA AO MENU       #####")
+        print("#######################################")
+        print()
+        cod_cliente = input("##### Digite o código do Cliente: ")
+        Sel.where_query()
+        cursor.execute(Sel.where_query(cod_cliente))
+        dado = cursor.fetchall()
+        print(f"ID: {dado[0]} | NOME: {dado[1]}")
+
+        
+        
+
+    except (Exception, psycopg2.Error) as error:
+        print("Erro ao conectar ou operar no PostgrSQL", error)
+    finally:
+        # Fechar Conexão
+        if connection:
+            cursor.close()
+            connection.close()
+            print("Conexão com PostgrSQL fechada")
+    
+    print()
+    input("tecle <ENTER> para prosseguir")
+
+
+def relatorio_clientes():
+    try:
+        connection = psycopg2.connect(
+            user="postgres",
+            password="palmeiras123",
+            host="localhost",
+            port="5432",
+            database="clientes"
+        )
+        cursor = connection.cursor()
+
+        os.system('clear || cls') # se for Linux use 'clear' e se for Windowns use 'cls'
+        print()
+        print("#######################################################################################################################################")
+        print("#################################################     Relatório de Clientes Ativos        #############################################")
+        print("#######################################################################################################################################")
+        print("|-----|---------------------------------------------|---------------------------------------------|------------------|----------------|")
+        print("| Cod |               Nome Completo                 |                    E-mail                   |      Celular     |       CPF      |")
+        print("|-----|---------------------------------------------|---------------------------------------------|------------------|----------------|")
+        # Consultar os dados inseridos
+        Sel.select_query()
+        cursor.execute(Sel.select_query())
+        records = cursor.fetchall()
+
+        for row in records:
+            # print(f"ID: {row[0]}, Cliente: {row[1]}, E-mail: {row[2]}, Celular: {row[3]}, CPF: {row[4]}")
+            print("| %-3s "%(row[0]), end="")
+            print("| %-43s "%(row[1]), end="")
+            print("| %-43s "%(row[2]), end="")
+            print("| %-16s "%(row[3]), end="")
+            print("| %-14s "%(row[4]))
+        print("---------------------------------------------------------------------------------------------------------------------------------------")
+        print()
+        input("tecle <ENTER> para prosseguir")
+
+
+
+    
+    except (Exception, psycopg2.Error) as error:
+        print("Erro ao conectar ou operar no PostgrSQL", error)
+    finally:
+        # Fechar Conexão
+        if connection:
+            cursor.close()
+            connection.close()
+            print("Conexão com PostgrSQL fechada")
+
 
 
 
