@@ -1,7 +1,6 @@
-
-
 '''imports'''
 import psycopg2
+import Cr_querys #  Arquvio de consulta para a Criação da Tabela
 import os
 
 
@@ -17,17 +16,9 @@ def cadastrar_cliente():
         cursor = connection.cursor()
 
         # Criar Tabela
-        create_table_query = '''
-        CREATE TABLE IF NOT EXISTS clientes(
-            cod_cliente SERIAL PRIMARY KEY,
-            nome VARCHAR(60),
-            email VARCHAR(40),
-            celular VARCHAR(25),
-            cpf VARCHAR(20),
-            ativo BOOLEAN
-        );
-        '''
-        cursor.execute(create_table_query)
+        Cr_querys.create_table()
+
+        cursor.execute(Cr_querys.create_table())
         connection.commit()
 
         # Pedindo os Dados:
