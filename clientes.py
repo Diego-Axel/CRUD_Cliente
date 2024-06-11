@@ -46,6 +46,8 @@ def cadastrar_cliente():
         cod_cliente_inserido = cursor.fetchone()[0]
         connection.commit()
         print(f"Dado Salvo com sucesso, inserido com o ID: {cod_cliente_inserido}")
+        print()
+        input("tecle <ENTER> para prosseguir")
 
         # Consultar os dados inseridos
         select_query = "SELECT * FROM clientes;"
