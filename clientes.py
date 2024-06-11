@@ -58,7 +58,8 @@ def cadastrar_cliente():
         print("Dados na Tabela 'clientes': ")
         for row in records:
             print(f"ID: {row[0]}, Cliente: {row[1]}, E-mail: {row[2]}, Celular: {row[3]}, CPF: {row[4]}")
-            print("Carregando...")
+        print()
+        input("tecle <ENTER> para prosseguir")
         
     except (Exception, psycopg2.Error) as error:
         print("Erro ao conectar ou operar no PostgrSQL", error)
@@ -68,6 +69,27 @@ def cadastrar_cliente():
             cursor.close()
             connection.close()
             print("Conexão com PostgrSQL fechada")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
