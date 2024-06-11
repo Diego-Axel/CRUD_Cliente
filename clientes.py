@@ -1,6 +1,7 @@
 '''imports'''
 import psycopg2
 import Cr_querys #  Arquvio de consulta para a Criação da Tabela
+import Insr_query
 import os
 
 
@@ -39,12 +40,9 @@ def cadastrar_cliente():
         ativo = True
 
         # Inserindo Dados na Tabela:
-        insert_query = '''
-        INSERT INTO clientes (nome, email, celular, cpf, ativo)
-        VALUES (%s, %s, %s, %s, %s)
-        RETURNING cod_cliente;
-        '''
-        cursor.execute(insert_query, (nome_cliente, email, celular, cpf, ativo))
+        Insr_query.insert_into()
+
+        cursor.execute(Insr_query.insert_into(), (nome_cliente, email, celular, cpf, ativo))
         cod_cliente_inserido = cursor.fetchone()[0]
         connection.commit()
         print(f"Dado Salvo com sucesso, inserido com o ID: {cod_cliente_inserido}")
