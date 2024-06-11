@@ -2,6 +2,7 @@
 import psycopg2
 import Cr_querys #  Arquvio de consulta para a Criação da Tabela
 import Insr_query
+import Sel
 import os
 
 
@@ -50,8 +51,8 @@ def cadastrar_cliente():
         input("tecle <ENTER> para prosseguir")
 
         # Consultar os dados inseridos
-        select_query = "SELECT * FROM clientes;"
-        cursor.execute(select_query)
+        Sel.select_query()
+        cursor.execute(Sel.select_query())
         records = cursor.fetchall()
 
         print("Dados na Tabela 'clientes': ")
