@@ -14,6 +14,7 @@ def menu_cliente():
     print("##### 2 - Exibir Dados do Cliente      #####")
     print("##### 3 - Alterar Dados do Cliente     #####")
     print("##### 4 - Excluir Cliente              #####")
+    print("##### 5 - Relatório de Clientes        #####")
     print("##### 0 - Encerrar Programa            #####")
     print("############################################")
     print()
