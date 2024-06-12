@@ -51,15 +51,15 @@ def cadastrar_cliente():
         input("tecle <ENTER> para prosseguir")
 
         # Consultar os dados inseridos
-        Sel.select_query()
-        cursor.execute(Sel.select_query())
-        records = cursor.fetchall()
+        # Sel.select_query()
+        # cursor.execute(Sel.select_query())
+        # records = cursor.fetchall()
 
-        print("Dados na Tabela 'clientes': ")
-        for row in records:
-            print(f"ID: {row[0]}, Cliente: {row[1]}, E-mail: {row[2]}, Celular: {row[3]}, CPF: {row[4]}")
-        print()
-        input("tecle <ENTER> para prosseguir")
+        # print("Dados na Tabela 'clientes': ")
+        # for row in records:
+        #     print(f"ID: {row[0]}, Cliente: {row[1]}, E-mail: {row[2]}, Celular: {row[3]}, CPF: {row[4]}")
+        # print()
+        # input("tecle <ENTER> para prosseguir")
         
     except (Exception, psycopg2.Error) as error:
         print("Erro ao conectar ou operar no PostgrSQL", error)
@@ -91,13 +91,26 @@ def exibit_cliente():
         print()
         cod_cliente = input("##### Digite o código do Cliente: ")
         Sel.where_query()
-        cursor.execute(Sel.where_query(cod_cliente))
-        dado = cursor.fetchall()
-        print(f"ID: {dado[0]} | NOME: {dado[1]}")
+        cursor.execute(Sel.where_query(), (cod_cliente))
+        records = cursor.fetchall()
+        if (Sel.where_query() in records):
+            print()
+            print("#######################################################################################################################################")
+            print("#################################################         Relatório de Clientes           #############################################")
+            print("#######################################################################################################################################")
+            print("|-----|---------------------------------------------|---------------------------------------------|------------------|----------------|")
+            print("| Cod |               Nome Completo                 |                    E-mail                   |      Celular     |       CPF      |")
+            print("|-----|---------------------------------------------|---------------------------------------------|------------------|----------------|")
+            # print("| %-3s "%(Sel.where_query[0]), end="")
+            # print("| %-43s "%(Sel.where_query[1]), end="")
+            # print("| %-43s "%(Sel.where_query[2]), end="")
+            # print("| %-16s "%(Sel.where_query[3]), end="")
+            # print("| %-14s "%(Sel.where_query[4]))
+            print("---------------------------------------------------------------------------------------------------------------------------------------")
+        else:
+            print("NAO")
 
         
-        
-
     except (Exception, psycopg2.Error) as error:
         print("Erro ao conectar ou operar no PostgrSQL", error)
     finally:
@@ -125,7 +138,7 @@ def relatorio_clientes():
         os.system('clear || cls') # se for Linux use 'clear' e se for Windowns use 'cls'
         print()
         print("#######################################################################################################################################")
-        print("#################################################     Relatório de Clientes Ativos        #############################################")
+        print("#################################################         Relatório de Clientes           #############################################")
         print("#######################################################################################################################################")
         print("|-----|---------------------------------------------|---------------------------------------------|------------------|----------------|")
         print("| Cod |               Nome Completo                 |                    E-mail                   |      Celular     |       CPF      |")
@@ -134,7 +147,6 @@ def relatorio_clientes():
         Sel.select_query()
         cursor.execute(Sel.select_query())
         records = cursor.fetchall()
-
         for row in records:
             # print(f"ID: {row[0]}, Cliente: {row[1]}, E-mail: {row[2]}, Celular: {row[3]}, CPF: {row[4]}")
             print("| %-3s "%(row[0]), end="")
@@ -146,9 +158,6 @@ def relatorio_clientes():
         print()
         input("tecle <ENTER> para prosseguir")
 
-
-
-    
     except (Exception, psycopg2.Error) as error:
         print("Erro ao conectar ou operar no PostgrSQL", error)
     finally:
