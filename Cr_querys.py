@@ -1,7 +1,6 @@
 '''
-Arquivo para as minhas querys referentes a criação de tabelas.
+Arquivo para as minhas querys referentes a criação de tabelas
 '''
-
 def create_table():
     create_table_query = '''
         CREATE TABLE IF NOT EXISTS clientes(
