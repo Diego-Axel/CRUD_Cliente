@@ -1,3 +1,7 @@
+'''
+Arquivo para as minhas querys referentes a inserção de valores nas tabelas, INSERT INTO, VALUES.
+'''
+
 def insert_into():
     insert_query = '''
         INSERT INTO clientes (nome, email, celular, cpf, ativo)
