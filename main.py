@@ -17,6 +17,10 @@ while op_cliente != "0":
     if op_cliente == "1":
         clientes.cadastrar_cliente()
     elif op_cliente == "2":
-        clientes.exibit_cliente()
+        clientes.exibir_cliente()
+    elif op_cliente == "3":
+        pass
+    elif op_cliente == "4":
+        pass
     elif op_cliente == "5":
         clientes.relatorio_clientes()
