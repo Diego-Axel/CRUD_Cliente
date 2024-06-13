@@ -5,7 +5,6 @@ Arquivo para a minha "interface" de clientes
 '''imports'''
 import os
 
-
 def menu_cliente():
     os.system('clear || cls') # se for Linux use 'clear' e se for Windowns use 'cls'
     print()
