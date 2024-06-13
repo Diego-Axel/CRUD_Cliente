@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-PyBooks -> Um CRUD para CLIENTES. 
+Um CRUD para CLIENTES. 
 </p>
 
 <p align="center">
@@ -73,13 +73,17 @@ https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
 
  - Vá no seu PGADMIM(PostgreSQL) clique em servers, e depois clique em postgres, literalmente a imagem dele, por fim, clique no postgres que tem uma espécie de 'moeda' ao seu lado esquerdo, isso é um DATABASE, um banco, mas vamos criar um próprio.
 
- <img alt="Criando DATABASE." src="documentacao/imagens/postgres/servidor.png" width="19%"><img alt="Criando DATABASE." src="documentacao/imagens/postgres/post0.png" width="15%"><img alt="Criando DATABASE." src="documentacao/imagens/postgres/postgre.png" width="20%">
+ - No seu PGADMIN vá em:
 
+````shell
+ Servers | PostregreSQL | PostgreSQL (DATABASE)
+ ````
 
 - Bem, após clicar no DATABASE, abra a query tools, em cima do servidor. Lá digite esse mesmo comando aqui embaixo:
 
-<img alt="Criando DATABASE." src="documentacao/imagens/postgres/create.png" width="70%">
-
+````shell
+CREATE DATABASE nome_banco --NOME DE SUA PREFERÊNCIA PARA SEU BANCO DE DADOS
+````
 
  ### 4- Conectar ao banco de dados PostgreSQL:
 
@@ -87,7 +91,15 @@ https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
  
  - Em seu código python, para começar uma conexão, lembre-se de tratar o erro (ver meu código) após isso, vamos conectar-se:
 
-<img alt="conexão" src="documentacao/imagens/python/code_.png" width="60%">
+````shell
+connection = psycopg2.connect(
+  user="", # Seu usuário lá no banco de dados
+  password="", # Senha que foi criada por você quando baixou o Postgres
+  host="", # O host =, se for em sua máquina, então será localhost
+  port="", # A porta está nas propriedades do banco
+  database="" # O nome do DATABASE que você criou anteriomente
+)
+````
 
 ### 5- Final:
 
