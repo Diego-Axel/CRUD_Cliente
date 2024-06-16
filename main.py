@@ -19,8 +19,8 @@ while op_cliente != "0":
     elif op_cliente == "2":
         clientes.exibir_cliente()
     elif op_cliente == "3":
-        pass
+        clientes.alterar_dados()
     elif op_cliente == "4":
-        pass
+        clientes.excluir_clienre()
     elif op_cliente == "5":
         clientes.relatorio_clientes()
