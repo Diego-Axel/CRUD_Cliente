@@ -1,6 +1,7 @@
 '''imports'''
 import psycopg2
 import Cr_querys #  Arquvio de consulta para a Criação da Tabela
+import Del_query
 import Insr_query #  Arquvio de consulta para a Inserção de Valores nas Tabelas
 import Sel #  Arquvio de consulta para dar SELECT(s) na Tabela
 import os
@@ -124,7 +125,7 @@ def exibir_cliente():
     input("tecle <ENTER> para prosseguir ")
 
 
-def alterar_dados(): # Em desenvolvimento
+def alterar_dados(): # Em desenvolvimento (está apresentado erros ainda. Estou fazendo a manutenção)
     try:
         connection = psycopg2.connect(
             user="postgres",
@@ -173,7 +174,7 @@ def alterar_dados(): # Em desenvolvimento
             connection.close()
             print("Conexão com PostgrSQL fechada")
 
-def excluir_clienre(): # Em desenvolvimento
+def excluir_cliente(): # Em desenvolvimento (está apresentado erros ainda. Estou fazendo a manutenção)
     try:
         connection = psycopg2.connect(
             user="postgres",
@@ -194,8 +195,8 @@ def excluir_clienre(): # Em desenvolvimento
         cod_cliente = input("##### Digite o ID do cliente a ser excluído: ")
 
         # Excluindo Dados na Tabela:
-        delete_query = f"DELETE FROM clientes WHERE id = {cod_cliente};"
-        cursor.execute(delete_query)
+        Del_query.delete_query(cod_cliente)
+        cursor.execute(Del_query.delete_query())
         connection.commit()
         print(f"Cliente com ID {cod_cliente} excluído com sucesso")
         print()
