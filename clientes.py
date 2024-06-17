@@ -51,17 +51,6 @@ def cadastrar_cliente(): # Manutenção Feita. Em funcionamento.
         print(f"Dado Salvo com sucesso, inserido com o ID: {cod_cliente_inserido}")
         print()
         input("tecle <ENTER> para prosseguir ")
-
-        # Consultar os dados inseridos
-        # Sel.select_query()
-        # cursor.execute(Sel.select_query())
-        # records = cursor.fetchall()
-
-        # print("Dados na Tabela 'clientes': ")
-        # for row in records:
-        #     print(f"ID: {row[0]}, Cliente: {row[1]}, E-mail: {row[2]}, Celular: {row[3]}, CPF: {row[4]}")
-        # print()
-        # input("tecle <ENTER> para prosseguir")
         
     except (Exception, psycopg2.Error) as error:
         print("Erro ao conectar ou operar no PostgrSQL", error)
@@ -73,7 +62,7 @@ def cadastrar_cliente(): # Manutenção Feita. Em funcionamento.
             print("Conexão com PostgrSQL fechada")
 
 
-def exibir_cliente(): 
+def exibir_cliente(): # Em manutenção
     try:
         connection = psycopg2.connect(
             user="postgres",
