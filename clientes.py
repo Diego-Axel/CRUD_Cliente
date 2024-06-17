@@ -1,10 +1,10 @@
 '''imports'''
 import psycopg2
-import Cr_querys #  Arquvio de consulta para a Criação da Tabela
-import Del_query #  Arquvio de consulta para a Deletação de Cliente
-import Up_query #  Arquvio de consulta para a Alteração dos Dados do Cliente
-import Insr_query #  Arquvio de consulta para a Inserção de Valores nas Tabelas
-import Sel #  Arquvio de consulta para dar SELECT(s) na Tabela
+import cr_querys #  Arquvio de consulta para a Criação da Tabela
+import del_query #  Arquvio de consulta para a Deletação de Cliente
+import up_query #  Arquvio de consulta para a Alteração dos Dados do Cliente
+import insr_query #  Arquvio de consulta para a Inserção de Valores nas Tabelas
+import sel_query #  Arquvio de consulta para dar SELECT(s) na Tabela
 import os
 
 
@@ -20,9 +20,9 @@ def cadastrar_cliente(): # Manutenção Feita. Em funcionamento.
         cursor = connection.cursor()
 
         # Criar Tabela
-        Cr_querys.create_table()
+        cr_querys.create_table()
 
-        cursor.execute(Cr_querys.create_table())
+        cursor.execute(cr_querys.create_table())
         connection.commit()
 
         # Pedindo os Dados:
@@ -43,9 +43,9 @@ def cadastrar_cliente(): # Manutenção Feita. Em funcionamento.
         ativo = True
 
         # Inserindo Dados na Tabela:
-        Insr_query.insert_into()
+        insr_query.insert_into()
 
-        cursor.execute(Insr_query.insert_into(), (nome_cliente, email, celular, cpf, ativo))
+        cursor.execute(insr_query.insert_into(), (nome_cliente, email, celular, cpf, ativo))
         cod_cliente_inserido = cursor.fetchone()[0]
         connection.commit()
         print(f"Dado Salvo com sucesso, inserido com o ID: {cod_cliente_inserido}")
@@ -81,10 +81,10 @@ def exibir_cliente(): # Em manutenção
         print("#######################################")
         print()
         cod_cliente = input("##### Digite o código do Cliente: ")
-        Sel.where_query()
-        cursor.execute(Sel.where_query(), (cod_cliente))
+        sel_query.where_query()
+        cursor.execute(sel_query.where_query(), (cod_cliente))
         records = cursor.fetchall()
-        if (Sel.where_query() in records):
+        if (sel_query.where_query() in records):
             print()
             print("#######################################################################################################################################")
             print("#################################################         Relatório de Clientes           #############################################")
@@ -144,9 +144,9 @@ def alterar_dados(): # Em desenvolvimento (está apresentado erros ainda. Estou 
         cpf = input("##### CPF: ")
 
         # Atualizando Dados na Tabela:
-        Up_query.update_query()
+        up_query.update_query()
 
-        cursor.execute(Up_query.update_query(), (nome_cliente, email, celular, cpf, cod_cliente))
+        cursor.execute(up_query.update_query(), (nome_cliente, email, celular, cpf, cod_cliente))
         connection.commit()
         print(f"Cliente com ID {cod_cliente} atualizado com sucesso")
         print()
@@ -182,8 +182,8 @@ def excluir_cliente(): # Em desenvolvimento (está apresentado erros ainda. Esto
         cod_cliente = input("##### Digite o ID do cliente a ser excluído: ")
 
         # Excluindo Dados na Tabela:
-        Del_query.delete_query(cod_cliente)
-        cursor.execute(Del_query.delete_query())
+        del_query.delete_query(cod_cliente)
+        cursor.execute(del_query.delete_query())
         connection.commit()
         print(f"Cliente com ID {cod_cliente} excluído com sucesso")
         print()
@@ -218,8 +218,8 @@ def relatorio_clientes(): # Manutenção Feita. Em funcionamento.
         print("| Cod |               Nome Completo                 |                    E-mail                   |      Celular     |       CPF      |")
         print("|-----|---------------------------------------------|---------------------------------------------|------------------|----------------|")
         # Consultar os dados inseridos
-        Sel.select_query()
-        cursor.execute(Sel.select_query())
+        sel_query.select_query()
+        cursor.execute(sel_query.select_query())
         records = cursor.fetchall()
         for row in records:
             # print(f"ID: {row[0]}, Cliente: {row[1]}, E-mail: {row[2]}, Celular: {row[3]}, CPF: {row[4]}")
