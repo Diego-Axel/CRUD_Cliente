@@ -21,6 +21,6 @@ while op_cliente != "0":
     elif op_cliente == "3":
         clientes.alterar_dados()
     elif op_cliente == "4":
-        clientes.excluir_clienre()
+        clientes.excluir_cliente()
     elif op_cliente == "5":
         clientes.relatorio_clientes()
