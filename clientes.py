@@ -1,13 +1,14 @@
 '''imports'''
 import psycopg2
 import Cr_querys #  Arquvio de consulta para a Criação da Tabela
-import Del_query
+import Del_query #  Arquvio de consulta para a Deletação de Cliente
+import Up_query #  Arquvio de consulta para a Alteração dos Dados do Cliente
 import Insr_query #  Arquvio de consulta para a Inserção de Valores nas Tabelas
 import Sel #  Arquvio de consulta para dar SELECT(s) na Tabela
 import os
 
 
-def cadastrar_cliente():
+def cadastrar_cliente(): # Manutenção Feita. Em funcionamento.
     try:
         connection = psycopg2.connect(
             user="postgres",
@@ -72,7 +73,7 @@ def cadastrar_cliente():
             print("Conexão com PostgrSQL fechada")
 
 
-def exibir_cliente():
+def exibir_cliente(): 
     try:
         connection = psycopg2.connect(
             user="postgres",
@@ -154,12 +155,9 @@ def alterar_dados(): # Em desenvolvimento (está apresentado erros ainda. Estou 
         cpf = input("##### CPF: ")
 
         # Atualizando Dados na Tabela:
-        update_query = """
-        UPDATE clientes 
-        SET nome = %s, email = %s, celular = %s, cpf = %s 
-        WHERE id = %s;
-        """
-        cursor.execute(update_query, (nome_cliente, email, celular, cpf, cod_cliente))
+        Up_query.update_query()
+
+        cursor.execute(Up_query.update_query(), (nome_cliente, email, celular, cpf, cod_cliente))
         connection.commit()
         print(f"Cliente com ID {cod_cliente} atualizado com sucesso")
         print()
@@ -211,7 +209,7 @@ def excluir_cliente(): # Em desenvolvimento (está apresentado erros ainda. Esto
             print("Conexão com PostgreSQL fechada")
 
 
-def relatorio_clientes():
+def relatorio_clientes(): # Manutenção Feita. Em funcionamento.
     try:
         connection = psycopg2.connect(
             user="postgres",
