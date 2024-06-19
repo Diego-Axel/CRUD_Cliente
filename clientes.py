@@ -62,7 +62,10 @@ def cadastrar_cliente(): # Manutenção Feita. Em funcionamento.
             print("Conexão com PostgrSQL fechada")
 
 
-def exibir_cliente(): # Em manutenção
+def exibir_cliente():
+    connection = None
+    cursor = None
+
     try:
         connection = psycopg2.connect(
             user="postgres",
@@ -73,7 +76,7 @@ def exibir_cliente(): # Em manutenção
         )
         cursor = connection.cursor()
         
-        os.system('clear || cls') # se for Linux use 'clear' e se for Windowns use 'cls'
+        os.system('clear || cls')  # use 'clear' no Linux e 'cls' no Windows
         print("#######################################")
         print("#####   EXIBIR DADOS DO CLIENTE   #####")
         print("#######################################")
@@ -81,10 +84,17 @@ def exibir_cliente(): # Em manutenção
         print("#######################################")
         print()
         cod_cliente = input("##### Digite o código do Cliente: ")
-        sel_query.where_query()
-        cursor.execute(sel_query.where_query(), (cod_cliente))
+        
+        if cod_cliente == '0':
+            return
+        
+        # Definindo a query de seleção
+        sel_query.select_query()
+        
+        cursor.execute(sel_query.select_query(), (cod_cliente,))
         records = cursor.fetchall()
-        if (sel_query.where_query() in records):
+        
+        if records:
             print()
             print("#######################################################################################################################################")
             print("#################################################         Relatório de Clientes           #############################################")
@@ -92,30 +102,35 @@ def exibir_cliente(): # Em manutenção
             print("|-----|---------------------------------------------|---------------------------------------------|------------------|----------------|")
             print("| Cod |               Nome Completo                 |                    E-mail                   |      Celular     |       CPF      |")
             print("|-----|---------------------------------------------|---------------------------------------------|------------------|----------------|")
-            # print("| %-3s "%(Sel.where_query[0]), end="")
-            # print("| %-43s "%(Sel.where_query[1]), end="")
-            # print("| %-43s "%(Sel.where_query[2]), end="")
-            # print("| %-16s "%(Sel.where_query[3]), end="")
-            # print("| %-14s "%(Sel.where_query[4]))
+            for row in records:
+                print("| %-3s "%(row[0]), end="")
+                print("| %-43s "%(row[1]), end="")
+                print("| %-43s "%(row[2]), end="")
+                print("| %-16s "%(row[3]), end="")
+                print("| %-14s "%(row[4]))
             print("---------------------------------------------------------------------------------------------------------------------------------------")
+            print()
         else:
             print("Código Inexistente")
 
-        
     except (Exception, psycopg2.Error) as error:
-        print("Erro ao conectar ou operar no PostgrSQL", error)
+        print("Erro ao conectar ou operar no PostgreSQL", error)
     finally:
         # Fechar Conexão
-        if connection:
+        if cursor:
             cursor.close()
+        if connection:
             connection.close()
-            print("Conexão com PostgrSQL fechada")
+        print("Conexão com PostgreSQL fechada")
     
     print()
     input("tecle <ENTER> para prosseguir ")
 
 
-def alterar_dados(): # Em desenvolvimento (está apresentado erros ainda. Estou fazendo a manutenção)
+def alterar_dados(): # Manutenção Feita
+    connection = None
+    cursor = None
+    
     try:
         connection = psycopg2.connect(
             user="postgres",
@@ -129,9 +144,9 @@ def alterar_dados(): # Em desenvolvimento (está apresentado erros ainda. Estou 
         # Pedindo os Dados do Cliente a ser Alterado
         os.system('clear || cls')
         print()
-        print("############################################")
-        print("#####        Alterar Cliente            #####")
-        print("############################################")
+        print("#############################################")
+        print("#####           Alterar Cliente         #####")
+        print("#############################################")
         print()
         cod_cliente = input("##### Digite o ID do cliente a ser alterado: ")
         print()
@@ -143,7 +158,7 @@ def alterar_dados(): # Em desenvolvimento (está apresentado erros ainda. Estou 
         print()
         cpf = input("##### CPF: ")
 
-        # Atualizando Dados na Tabela:
+        # Definindo a query de atualização
         up_query.update_query()
 
         cursor.execute(up_query.update_query(), (nome_cliente, email, celular, cpf, cod_cliente))
@@ -153,15 +168,20 @@ def alterar_dados(): # Em desenvolvimento (está apresentado erros ainda. Estou 
         input("tecle <ENTER> para prosseguir ")
 
     except (Exception, psycopg2.Error) as error:
-        print("Erro ao conectar ou operar no PostgrSQL", error)
+        print("Erro ao conectar ou operar no PostgreSQL", error)
     finally:
         # Fechar Conexão
-        if connection:
+        if cursor:
             cursor.close()
+        if connection:
             connection.close()
-            print("Conexão com PostgrSQL fechada")
+        print("Conexão com PostgreSQL fechada")
 
-def excluir_cliente(): # Em desenvolvimento (está apresentado erros ainda. Estou fazendo a manutenção)
+
+def excluir_cliente():
+    connection = None
+    cursor = None
+    
     try:
         connection = psycopg2.connect(
             user="postgres",
@@ -176,26 +196,31 @@ def excluir_cliente(): # Em desenvolvimento (está apresentado erros ainda. Esto
         os.system('clear || cls')
         print()
         print("############################################")
-        print("#####        Excluir Cliente            #####")
+        print("#####          Excluir Cliente         #####")
         print("############################################")
         print()
         cod_cliente = input("##### Digite o ID do cliente a ser excluído: ")
 
-        # Excluindo Dados na Tabela:
-        del_query.delete_query(cod_cliente)
-        cursor.execute(del_query.delete_query())
+        # Definindo a query de exclusão
+        del_query.delete_query()
+
+        # Executando a query de exclusão
+        cursor.execute(del_query.delete_query(), (cod_cliente,))
         connection.commit()
         print(f"Cliente com ID {cod_cliente} excluído com sucesso")
         print()
         input("tecle <ENTER> para prosseguir ")
 
-
+    except (Exception, psycopg2.Error) as error:
+        print("Erro ao conectar ou operar no PostgreSQL", error)
+        input("tecle <ENTER> para prosseguir ")
     finally:
         # Fechar Conexão
-        if connection:
+        if cursor:
             cursor.close()
+        if connection:
             connection.close()
-            print("Conexão com PostgreSQL fechada")
+        print("Conexão com PostgreSQL fechada")
 
 
 def relatorio_clientes(): # Manutenção Feita. Em funcionamento.
@@ -218,8 +243,8 @@ def relatorio_clientes(): # Manutenção Feita. Em funcionamento.
         print("| Cod |               Nome Completo                 |                    E-mail                   |      Celular     |       CPF      |")
         print("|-----|---------------------------------------------|---------------------------------------------|------------------|----------------|")
         # Consultar os dados inseridos
-        sel_query.select_query()
-        cursor.execute(sel_query.select_query())
+        sel_query.select_full_query()
+        cursor.execute(sel_query.select_full_query())
         records = cursor.fetchall()
         for row in records:
             # print(f"ID: {row[0]}, Cliente: {row[1]}, E-mail: {row[2]}, Celular: {row[3]}, CPF: {row[4]}")
