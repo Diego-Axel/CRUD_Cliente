@@ -8,7 +8,6 @@ import os
 def exibir_cliente():
     connection = None
     cursor = None
-
     try:
         connection = psycopg2.connect(
             user="postgres",
@@ -18,7 +17,6 @@ def exibir_cliente():
             database="clientes"
         )
         cursor = connection.cursor()
-        
         os.system('clear || cls')  # use 'clear' no Linux e 'cls' no Windows
         print("#######################################")
         print("#####   EXIBIR DADOS DO CLIENTE   #####")
@@ -27,16 +25,11 @@ def exibir_cliente():
         print("#######################################")
         print()
         cod_cliente = input("##### Digite o código do Cliente: ")
-        
         if cod_cliente == '0':
             return
-        
-        # Definindo a query de seleção
-        sel_query.select_query()
-        
+        sel_query.select_query() # Definindo a query de seleção
         cursor.execute(sel_query.select_query(), (cod_cliente,))
         records = cursor.fetchall()
-        
         if records:
             print()
             print("#######################################################################################################################################")
@@ -55,7 +48,6 @@ def exibir_cliente():
             print()
         else:
             print("Código Inexistente")
-
     except (Exception, psycopg2.Error) as error:
         print("Erro ao conectar ou operar no PostgreSQL", error)
     finally:
@@ -65,6 +57,5 @@ def exibir_cliente():
         if connection:
             connection.close()
         print("Conexão com PostgreSQL fechada")
-    
     print()
     input("tecle <ENTER> para prosseguir ")
