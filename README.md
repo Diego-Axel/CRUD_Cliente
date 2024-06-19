@@ -44,7 +44,7 @@ Esse projeto foi desenvolvido com o seguinte Banco de Dados:
 
 - Deixando claro que, todos esses dados estão sendo salvo em um banco de dados(PostegreSQL) na minha própria máquina.
 
-- Agora, vou lhe dar o PASSO-A-PASSO de como você pode usar esse pequeno sistema (QUE AINDA ESTÁ EM DESENVOLVIMENTO) em sua máquina.
+- Agora, vou lhe dar o PASSO-A-PASSO de como você pode usar esse pequeno sistema em sua máquina.
 
 ## Passo-A-Passo
 
