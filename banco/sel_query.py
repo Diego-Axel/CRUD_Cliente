@@ -8,7 +8,7 @@ def select_query():
 
 
 def select_full_query():
-    select_full_query = "SELECT * FROM clientes;"
+    select_full_query = "SELECT * FROM clientes ORDER BY cod_cliente;"
     return select_full_query
 
 
