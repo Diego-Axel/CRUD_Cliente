@@ -1,6 +1,7 @@
 '''
 Arquivo para as minhas querys referentes a SELECT(s).
 '''
+
 def select_query():
     select_query = "SELECT cod_cliente, nome, email, celular, cpf FROM clientes WHERE cod_cliente = %s"
     return select_query
