@@ -16,7 +16,6 @@ def relatorio_clientes(): # Manutenção Feita. Em funcionamento.
             database="clientes"
         )
         cursor = connection.cursor()
-
         os.system('clear || cls') # se for Linux use 'clear' e se for Windowns use 'cls'
         print()
         print("#######################################################################################################################################")
@@ -39,7 +38,6 @@ def relatorio_clientes(): # Manutenção Feita. Em funcionamento.
         print("---------------------------------------------------------------------------------------------------------------------------------------")
         print()
         input("tecle <ENTER> para prosseguir ")
-
     except (Exception, psycopg2.Error) as error:
         print("Erro ao conectar ou operar no PostgrSQL", error)
     finally:
