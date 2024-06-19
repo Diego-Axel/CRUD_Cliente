@@ -2,7 +2,7 @@
 
 '''Imports'''
 import psycopg2
-import del_query #  Arquvio de consulta para a Deletação de Cliente
+import banco.del_query as del_query #  Arquvio de consulta para a Deletação de Cliente
 import os
 
 

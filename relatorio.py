@@ -2,7 +2,7 @@
 
 '''imports'''
 import psycopg2
-import sel_query #  Arquvio de consulta para dar SELECT(s) na Tabela
+import banco.sel_query as sel_query #  Arquvio de consulta para dar SELECT(s) na Tabela
 import os
 
 

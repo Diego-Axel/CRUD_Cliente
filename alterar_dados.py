@@ -2,7 +2,7 @@
 
 '''Imports'''
 import psycopg2
-import up_query #  Arquvio de consulta para a Alteração dos Dados do Cliente
+import banco.up_query as up_query #  Arquvio de consulta para a Alteração dos Dados do Cliente
 import os
 
 

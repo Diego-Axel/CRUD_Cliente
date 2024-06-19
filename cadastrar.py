@@ -2,8 +2,8 @@
 
 '''Imports'''
 import psycopg2
-import cr_querys #  Arquvio de consulta para a Criação da Tabela
-import insr_query #  Arquvio de consulta para a Inserção de Valores nas Tabelas
+import banco.cr_querys as cr_querys #  Arquvio de consulta para a Criação da Tabela
+import banco.insr_query as insr_query #  Arquvio de consulta para a Inserção de Valores nas Tabelas
 import os
 
 def cadastro(): # Manutenção Feita. Em funcionamento.
