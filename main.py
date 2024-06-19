@@ -31,3 +31,5 @@ while op_cliente != "0":
         relatorio.relatorio_clientes()
 
 os.system('celar || cls')
+print("Programa encerrado. Até breve.")
+print()
