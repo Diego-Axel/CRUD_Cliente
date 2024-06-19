@@ -9,7 +9,6 @@ import os
 def alterar_dados(): # Manutenção Feita
     connection = None
     cursor = None
-    
     try:
         connection = psycopg2.connect(
             user="postgres",
@@ -19,11 +18,9 @@ def alterar_dados(): # Manutenção Feita
             database="clientes"
         )
         cursor = connection.cursor()
-
-        # Pedindo os Dados do Cliente a ser Alterado
-        os.system('clear || cls')
+        os.system('clear || cls') # se for Linux use 'clear' e se for Windowns use 'cls'
         print()
-        print("#############################################")
+        print("#############################################") # Pedindo os Dados do Cliente a ser Alterado
         print("#####           Alterar Cliente         #####")
         print("#############################################")
         print()
@@ -36,16 +33,12 @@ def alterar_dados(): # Manutenção Feita
         celular = input("##### Digite seu Celular: ")
         print()
         cpf = input("##### CPF: ")
-
-        # Definindo a query de atualização
-        up_query.update_query()
-
+        up_query.update_query() # Definindo a query de atualização
         cursor.execute(up_query.update_query(), (nome_cliente, email, celular, cpf, cod_cliente))
         connection.commit()
         print(f"Cliente com ID {cod_cliente} atualizado com sucesso")
         print()
         input("tecle <ENTER> para prosseguir ")
-
     except (Exception, psycopg2.Error) as error:
         print("Erro ao conectar ou operar no PostgreSQL", error)
     finally:
