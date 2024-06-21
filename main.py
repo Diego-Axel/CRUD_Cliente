@@ -11,7 +11,7 @@ import exibir_dados as exdd
 import alterar_dados as altd
 import excluir
 import relatorio
-import os
+import encerramento as end
 
 '''programa principal'''
 
@@ -29,7 +29,6 @@ while op_cliente != "0":
         excluir.excluir_cliente()
     elif op_cliente == "5":
         relatorio.relatorio_clientes()
-
-os.system('celar || cls')
+end.encerramento()
 print("Programa encerrado. Até breve.")
 print()
