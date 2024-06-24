@@ -4,6 +4,7 @@
 import psycopg2
 import banco.cr_querys as cr_querys #  Arquvio de consulta para a Criação da Tabela
 import banco.insr_query as insr_query #  Arquvio de consulta para a Inserção de Valores nas Tabelas
+import validarores as validar # arquivo dos meus validadores
 import os
 
 def cadastro(): # Manutenção Feita. Em funcionamento.
@@ -28,7 +29,15 @@ def cadastro(): # Manutenção Feita. Em funcionamento.
         print()
         nome_cliente = input("##### Nome: ")
         print()
-        email = input("#### E-mail: ")
+        verificador = True
+        while verificador:   
+            email = input("#### E-mail: ")
+            if validar.validar_email(email):
+                print("E-mail válido!")
+                verificador = False
+            else:
+                print("O e-mail não é válido, veja se você não esquceu o '@'/domínio/'.com'. Por favor digite novamente.")
+                print()
         print()
         celular = input("##### Digite seu Celular: ")
         print()
