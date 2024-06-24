@@ -3,6 +3,7 @@
 '''Imports'''
 import psycopg2
 import banco.up_query as up_query #  Arquvio de consulta para a Alteração dos Dados do Cliente
+import validarores as validar # arquivo dos meus validadores
 import os
 
 
@@ -28,7 +29,15 @@ def alterar_dados(): # Manutenção Feita
         print()
         nome_cliente = input("##### Nome: ")
         print()
-        email = input("#### E-mail: ")
+        verficador = True
+        while verficador:
+            email = input("#### E-mail: ")
+            if validar.validar_email(email):
+                print("E-mail válido!")
+                verficador = False
+            else:
+                print("O e-mail não é válido, veja se você não esquceu o '@'/domínio/'.com'. Por favor digite novamente.")
+                print()
         print()
         celular = input("##### Digite seu Celular: ")
         print()
