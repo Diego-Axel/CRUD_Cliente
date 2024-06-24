@@ -39,7 +39,16 @@ def alterar_dados(): # Manutenção Feita
                 print("O e-mail não é válido, veja se você não esquceu o '@'/domínio/'.com'. Por favor digite novamente.")
                 print()
         print()
-        celular = input("##### Digite seu Celular: ")
+        verficador = True
+        while verficador:
+            print("##### Digite o Celular com DDD e o 9 adicional seguinddo este exemplo: (xx) xxxxx-xxxx (NÚMERO DE EXEMPLO)")
+            celular = input("##### Digite seu Celular: ")
+            if validar.validar_numero(celular):
+                print("Número válido!")
+                verificador = False
+            else:
+                print("Número não válido. Por favor, verifique se você colocou o número de acordo com o padrão e tente novamente")
+                print()
         print()
         cpf = input("##### CPF: ")
         up_query.update_query() # Definindo a query de atualização
