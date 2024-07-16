@@ -7,8 +7,8 @@
 '''imports'''
 import menu
 import cadastrar
-import exibir_dados as exdd
-import alterar_dados as altd
+import exibir_dados as exibir
+import alterar_dados as alterar
 import excluir
 import relatorio
 import encerramento as end
@@ -22,9 +22,9 @@ while op_cliente != "0":
     if op_cliente == "1":
         cadastrar.cadastro()
     elif op_cliente == "2":
-        exdd.exibir_cliente()
+        exibir.exibir_cliente()
     elif op_cliente == "3":
-        altd.alterar_dados()
+        alterar.alterar_dados()
     elif op_cliente == "4":
         excluir.excluir_cliente()
     elif op_cliente == "5":
