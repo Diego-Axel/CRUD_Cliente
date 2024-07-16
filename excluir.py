@@ -2,9 +2,8 @@
 
 '''Imports'''
 import psycopg2
+import interfaces as face
 import banco.del_query as del_query #  Arquvio de consulta para a Deletação de Cliente
-import os
-
 
 def excluir_cliente():
     connection = None
@@ -18,11 +17,7 @@ def excluir_cliente():
             database="clientes"
         )
         cursor = connection.cursor()
-        os.system('clear || cls') # se for Linux use 'clear' e se for Windowns use 'cls'
-        print()
-        print("############################################")
-        print("#####          Excluir Cliente         #####")
-        print("############################################")
+        face.excluir_dados()
         print()
         cod_cliente = input("##### Digite o ID do cliente a ser excluído: ") # Pedindo o ID do cliente a ser excluído
         del_query.delete_query() # Definindo a query de exclusão
