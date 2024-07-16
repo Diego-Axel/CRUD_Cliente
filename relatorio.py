@@ -2,9 +2,8 @@
 
 '''imports'''
 import psycopg2
+import interfaces as face
 import banco.sel_query as sel_query #  Arquvio de consulta para dar SELECT(s) na Tabela
-import os
-
 
 def relatorio_clientes(): # Manutenção Feita. Em funcionamento.
     try:
@@ -16,14 +15,7 @@ def relatorio_clientes(): # Manutenção Feita. Em funcionamento.
             database="clientes"
         )
         cursor = connection.cursor()
-        os.system('clear || cls') # se for Linux use 'clear' e se for Windowns use 'cls'
-        print()
-        print("#######################################################################################################################################")
-        print("#################################################         Relatório de Clientes           #############################################")
-        print("#######################################################################################################################################")
-        print("|-----|---------------------------------------------|---------------------------------------------|------------------|----------------|")
-        print("| Cod |               Nome Completo                 |                    E-mail                   |      Celular     |       CPF      |")
-        print("|-----|---------------------------------------------|---------------------------------------------|------------------|----------------|")
+        face.dados_cliente()
         # Consultar os dados inseridos
         sel_query.select_full_query()
         cursor.execute(sel_query.select_full_query())
