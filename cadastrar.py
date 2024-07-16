@@ -2,10 +2,10 @@
 
 '''Imports'''
 import psycopg2
+import interfaces as face
 import banco.cr_querys as cr_querys #  Arquvio de consulta para a Criação da Tabela
 import banco.insr_query as insr_query #  Arquvio de consulta para a Inserção de Valores nas Tabelas
 import validarores as validar # arquivo dos meus validadores
-import os
 
 def cadastro(): # Manutenção Feita. Em funcionamento.
     try:
@@ -21,11 +21,7 @@ def cadastro(): # Manutenção Feita. Em funcionamento.
         cursor.execute(cr_querys.create_table())
         connection.commit()
         # Pedindo os Dados:
-        os.system('clear || cls') # se for Linux use 'clear' e se for Windowns use 'cls'
-        print()
-        print("############################################")
-        print("#####        Cadastrar Cliente         #####")
-        print("############################################")
+        face.cadastrar_dados()
         print()
         nome_cliente = input("##### Nome: ")
         print()
