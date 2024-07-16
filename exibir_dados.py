@@ -1,9 +1,9 @@
 '''Arquivo referente a exibição dos dados dos clientes'''
 
 '''imports'''
+import interfaces as face
 import psycopg2
 import banco.sel_query as sel_query #  Arquvio de consulta para dar SELECT(s) na Tabela
-import os
 
 def exibir_cliente():
     connection = None
@@ -17,12 +17,7 @@ def exibir_cliente():
             database="clientes"
         )
         cursor = connection.cursor()
-        os.system('clear || cls')  # use 'clear' no Linux e 'cls' no Windows
-        print("#######################################")
-        print("#####   EXIBIR DADOS DO CLIENTE   #####")
-        print("#######################################")
-        print("#####   0 - RETORNA AO MENU       #####")
-        print("#######################################")
+        face.exibir_dados()
         print()
         cod_cliente = input("##### Digite o código do Cliente: ")
         if cod_cliente == '0':
@@ -32,12 +27,7 @@ def exibir_cliente():
         records = cursor.fetchall()
         if records:
             print()
-            print("#######################################################################################################################################")
-            print("#################################################         Relatório de Clientes           #############################################")
-            print("#######################################################################################################################################")
-            print("|-----|---------------------------------------------|---------------------------------------------|------------------|----------------|")
-            print("| Cod |               Nome Completo                 |                    E-mail                   |      Celular     |       CPF      |")
-            print("|-----|---------------------------------------------|---------------------------------------------|------------------|----------------|")
+            face.dados_cliente()
             for row in records:
                 print("| %-3s "%(row[0]), end="")
                 print("| %-43s "%(row[1]), end="")
