@@ -2,10 +2,9 @@
 
 '''Imports'''
 import psycopg2
+import interfaces as face
 import banco.up_query as up_query #  Arquvio de consulta para a Alteração dos Dados do Cliente
 import validarores as validar # arquivo dos meus validadores
-import os
-
 
 def alterar_dados(): # Manutenção Feita
     connection = None
@@ -19,11 +18,7 @@ def alterar_dados(): # Manutenção Feita
             database="clientes"
         )
         cursor = connection.cursor()
-        os.system('clear || cls') # se for Linux use 'clear' e se for Windowns use 'cls'
-        print()
-        print("#############################################") # Pedindo os Dados do Cliente a ser Alterado
-        print("#####           Alterar Cliente         #####")
-        print("#############################################")
+        face.alterar_dados()
         print()
         cod_cliente = input("##### Digite o ID do cliente a ser alterado: ")
         print()
