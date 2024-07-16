@@ -6,7 +6,7 @@ import os
 
 
 def encerramento():
-    os.system('celar || cls')
+    os.system('clear || cls') # Se for Linux use 'clear' se for Windows use 'cls'
     print("""
   ___                         _     _    _                      _   ___  _                  _           _ 
  |   \ ___ ______ _ ___ _____| |_ ___)__| |___   _ __ ___ _ _  (_) |   \(_)___ __ _ ___    /_\ __ _____| |
