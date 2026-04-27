@@ -1,23 +1,14 @@
-'''Arquivo referente a Alteração dos Dados dos Clientes'''
+'''Arquivo referente a Alteração dos Dados dos Clientes - Usando ORM'''
 
 '''Imports'''
-import psycopg2
 import interfaces as face
-import banco.up_query as up_query #  Arquvio de consulta para a Alteração dos Dados do Cliente
 import validarores as validar # arquivo dos meus validadores
+from banco.config import SessionLocal
+from banco.models import Cliente
 
-def alterar_dados(): # Manutenção Feita
-    connection = None
-    cursor = None
+def alterar_dados(): # Manutenção Feita com ORM
+    db = SessionLocal()
     try:
-        connection = psycopg2.connect(
-            user="postgres",
-            password="palmeiras123",
-            host="localhost",
-            port="5432",
-            database="clientes"
-        )
-        cursor = connection.cursor()
         face.alterar_dados()
         print()
         cod_cliente = input("##### Digite o ID do cliente a ser alterado: ")
@@ -40,24 +31,32 @@ def alterar_dados(): # Manutenção Feita
             celular = input("##### Digite seu Celular: ")
             if validar.validar_numero(celular):
                 print("Número válido!")
-                verificador = False
+                verficador = False
             else:
                 print("Número não válido. Por favor, verifique se você colocou o número de acordo com o padrão e tente novamente")
                 print()
         print()
         cpf = input("##### CPF: ")
-        up_query.update_query() # Definindo a query de atualização
-        cursor.execute(up_query.update_query(), (nome_cliente, email, celular, cpf, cod_cliente))
-        connection.commit()
-        print(f"Cliente com ID {cod_cliente} atualizado com sucesso")
+        
+        # Buscar e atualizar cliente com ORM
+        cliente = db.query(Cliente).filter(Cliente.cod_cliente == int(cod_cliente)).first()
+        
+        if cliente:
+            cliente.nome = nome_cliente
+            cliente.email = email
+            cliente.celular = celular
+            cliente.cpf = cpf
+            
+            db.commit()
+            print(f"Cliente com ID {cod_cliente} atualizado com sucesso")
+        else:
+            print(f"Cliente com ID {cod_cliente} não encontrado")
+        
         print()
         input("tecle <ENTER> para prosseguir ")
-    except (Exception, psycopg2.Error) as error:
-        print("Erro ao conectar ou operar no PostgreSQL", error)
+    except Exception as error:
+        db.rollback()
+        print("Erro ao atualizar cliente:", error)
     finally:
-        # Fechar Conexão
-        if cursor:
-            cursor.close()
-        if connection:
-            connection.close()
+        db.close()
         print("Conexão com PostgreSQL fechada")

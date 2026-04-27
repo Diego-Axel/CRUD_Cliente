@@ -1,51 +1,38 @@
-'''Arquivo referente a exibição dos dados dos clientes'''
+'''Arquivo referente a exibição dos dados dos clientes - Usando ORM'''
 
 '''imports'''
 import interfaces as face
-import psycopg2
-import banco.sel_query as sel_query #  Arquvio de consulta para dar SELECT(s) na Tabela
+from banco.config import SessionLocal
+from banco.models import Cliente
 
 def exibir_cliente():
-    connection = None
-    cursor = None
+    db = SessionLocal()
     try:
-        connection = psycopg2.connect(
-            user="postgres",
-            password="palmeiras123",
-            host="localhost",
-            port="5432",
-            database="clientes"
-        )
-        cursor = connection.cursor()
         face.exibir_dados()
         print()
         cod_cliente = input("##### Digite o código do Cliente: ")
         if cod_cliente == '0':
             return
-        sel_query.select_query() # Definindo a query de seleção
-        cursor.execute(sel_query.select_query(), (cod_cliente,))
-        records = cursor.fetchall()
-        if records:
+        
+        # Buscar cliente com ORM
+        cliente = db.query(Cliente).filter(Cliente.cod_cliente == int(cod_cliente)).first()
+        
+        if cliente:
             print()
             face.dados_cliente()
-            for row in records:
-                print("| %-3s "%(row[0]), end="")
-                print("| %-43s "%(row[1]), end="")
-                print("| %-43s "%(row[2]), end="")
-                print("| %-16s "%(row[3]), end="")
-                print("| %-14s "%(row[4]))
+            print("| %-3s "%(cliente.cod_cliente), end="")
+            print("| %-43s "%(cliente.nome), end="")
+            print("| %-43s "%(cliente.email), end="")
+            print("| %-16s "%(cliente.celular), end="")
+            print("| %-14s "%(cliente.cpf))
             print("---------------------------------------------------------------------------------------------------------------------------------------")
             print()
         else:
             print("Código Inexistente")
-    except (Exception, psycopg2.Error) as error:
-        print("Erro ao conectar ou operar no PostgreSQL", error)
+    except Exception as error:
+        print("Erro ao consultar cliente:", error)
     finally:
-        # Fechar Conexão
-        if cursor:
-            cursor.close()
-        if connection:
-            connection.close()
+        db.close()
         print("Conexão com PostgreSQL fechada")
     print()
     input("tecle <ENTER> para prosseguir ")

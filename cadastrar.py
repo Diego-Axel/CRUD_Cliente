@@ -1,25 +1,21 @@
-'''Arquivo referente ao cadastro de clientes'''
+'''Arquivo referente ao cadastro de clientes - Usando ORM'''
 
 '''Imports'''
-import psycopg2
 import interfaces as face
-import banco.cr_querys as cr_querys #  Arquvio de consulta para a Criação da Tabela
-import banco.insr_query as insr_query #  Arquvio de consulta para a Inserção de Valores nas Tabelas
 import validarores as validar # arquivo dos meus validadores
+from banco.config import SessionLocal, Base, engine
+from banco.models import Cliente
 
-def cadastro(): # Manutenção Feita. Em funcionamento.
+def criar_tabelas():
+    """Criar todas as tabelas se não existirem"""
+    Base.metadata.create_all(bind=engine)
+
+def cadastro(): # Manutenção Feita. Em funcionamento com ORM.
+    db = SessionLocal()
     try:
-        connection = psycopg2.connect(
-            user="postgres",
-            password="palmeiras123",
-            host="localhost",
-            port="5432",
-            database="clientes"
-        )
-        cursor = connection.cursor()
-        cr_querys.create_table()  # Criar Tabela
-        cursor.execute(cr_querys.create_table())
-        connection.commit()
+        # Criar tabela se não existir
+        criar_tabelas()
+        
         # Pedindo os Dados:
         face.cadastrar_dados()
         print()
@@ -48,19 +44,26 @@ def cadastro(): # Manutenção Feita. Em funcionamento.
         print()
         cpf = input("##### CPF: ")
         print()
-        ativo = True        
-        insr_query.insert_into() # Inserindo Dados na Tabela:
-        cursor.execute(insr_query.insert_into(), (nome_cliente, email, celular, cpf, ativo))
-        cod_cliente_inserido = cursor.fetchone()[0]
-        connection.commit()
-        print(f"Dado Salvo com sucesso, inserido com o ID: {cod_cliente_inserido}")
+        
+        # Criar novo cliente com ORM
+        novo_cliente = Cliente(
+            nome=nome_cliente,
+            email=email,
+            celular=celular,
+            cpf=cpf,
+            ativo=True
+        )
+        
+        db.add(novo_cliente)
+        db.commit()
+        db.refresh(novo_cliente)
+        
+        print(f"Dado Salvo com sucesso, inserido com o ID: {novo_cliente.cod_cliente}")
         print()
         input("tecle <ENTER> para prosseguir ")    
-    except (Exception, psycopg2.Error) as error:
-        print("Erro ao conectar ou operar no PostgrSQL", error)
+    except Exception as error:
+        db.rollback()
+        print("Erro ao cadastrar cliente:", error)
     finally:
-        # Fechar Conexão
-        if connection:
-            cursor.close()
-            connection.close()
-            print("Conexão com PostgrSQL fechada")
+        db.close()
+        print("Conexão com PostgreSQL fechada")

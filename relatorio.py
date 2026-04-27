@@ -1,40 +1,33 @@
-'''Arquivo referente ao Relatório de todos os meus clientes'''
+'''Arquivo referente ao Relatório de todos os meus clientes - Usando ORM'''
 
 '''imports'''
-import psycopg2
 import interfaces as face
-import banco.sel_query as sel_query #  Arquvio de consulta para dar SELECT(s) na Tabela
+from banco.config import SessionLocal
+from banco.models import Cliente
 
-def relatorio_clientes(): # Manutenção Feita. Em funcionamento.
+def relatorio_clientes(): # Manutenção Feita com ORM. Em funcionamento.
+    db = SessionLocal()
     try:
-        connection = psycopg2.connect(
-            user="postgres",
-            password="palmeiras123",
-            host="localhost",
-            port="5432",
-            database="clientes"
-        )
-        cursor = connection.cursor()
         face.dados_cliente()
-        # Consultar os dados inseridos
-        sel_query.select_full_query()
-        cursor.execute(sel_query.select_full_query())
-        records = cursor.fetchall()
-        for row in records:
-            # print(f"ID: {row[0]}, Cliente: {row[1]}, E-mail: {row[2]}, Celular: {row[3]}, CPF: {row[4]}")
-            print("| %-3s "%(row[0]), end="")
-            print("| %-43s "%(row[1]), end="")
-            print("| %-43s "%(row[2]), end="")
-            print("| %-16s "%(row[3]), end="")
-            print("| %-14s "%(row[4]))
-        print("---------------------------------------------------------------------------------------------------------------------------------------")
+        
+        # Consultar todos os clientes com ORM
+        clientes = db.query(Cliente).order_by(Cliente.cod_cliente).all()
+        
+        if clientes:
+            for cliente in clientes:
+                print("| %-3s "%(cliente.cod_cliente), end="")
+                print("| %-43s "%(cliente.nome), end="")
+                print("| %-43s "%(cliente.email), end="")
+                print("| %-16s "%(cliente.celular), end="")
+                print("| %-14s "%(cliente.cpf))
+            print("---------------------------------------------------------------------------------------------------------------------------------------")
+        else:
+            print("Nenhum cliente cadastrado")
+        
         print()
         input("tecle <ENTER> para prosseguir ")
-    except (Exception, psycopg2.Error) as error:
-        print("Erro ao conectar ou operar no PostgrSQL", error)
+    except Exception as error:
+        print("Erro ao consultar clientes:", error)
     finally:
-        # Fechar Conexão
-        if connection:
-            cursor.close()
-            connection.close()
-            print("Conexão com PostgrSQL fechada")
+        db.close()
+        print("Conexão com PostgreSQL fechada")
